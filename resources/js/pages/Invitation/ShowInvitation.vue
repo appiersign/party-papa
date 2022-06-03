@@ -1,80 +1,71 @@
 <template>
-    <div id="invitation" class="g-0">
-        <div class="container-fluid">
-            <div class="row g-0 d-flex align-items-center" style="height: 100vh">
-                <div id="container" class="py-5 mx-auto">
-                    <h1 id="main-header" class="text-center animate__animated animate__fadeInUp"
-                        style="color: #9C6E38;">Celebrating</h1>
-                    <h1 id="sub-header" class="text-center animate__animated animate__fadeInUp" style="color: #9C6E38;">
-                        <strong>NIIPRO & SIGN</strong></h1>
-                    <div id="strict-note-container"
-                        class="d-flex align-items-center justify-content-center m-0 mt-5 mx-auto animate__animated animate__fadeInUp"
-                        style="background-color: #09090B;">
-                        <p id="strict-note" class="m-0 px-3 py-2 text-center" style="color: #AD7835"><b>{{ strictNote }}</b>
-                        </p>
-                    </div>
+    <guest-layout>
+        <div id="strict-note-container"
+             class="d-flex align-items-center justify-content-center m-0 mt-5 mx-auto animate__animated animate__fadeInUp"
+             style="background-color: #09090B;">
+            <p id="strict-note" class="m-0 px-3 py-2 text-center" style="color: #AD7835"><b>{{ strictNote }}</b>
+            </p>
+        </div>
 
-                    <div id="details-container"
-                        class="d-flex align-items-center justify-content-center flex-column m-0 mt-5 mx-auto animate__animated animate__fadeInUp">
-                        <transition name="details">
-                            <div v-if="showDetails"
-                                 class="d-flex align-items-center justify-content-center flex-column">
-                                <p id="theme" class="m-0 details-font" style="color: #ABABAB"><b>COCKTAILS & VIBES</b></p>
-                                <p id="version" class="m-0 details-font" style="color: #ABABAB">V1.0</p>
-                                <p id="date" class="m-0 details-font" style="color: #ABABAB">June 18, 2022 @ 1900hrs</p>
-                                <p id="greetings" class="m-0 mt-3 text-center" style="color: #ABABAB">
-                                    Hi {{ invitation.guest.name }}, looking forward to celebrate our birthday with you,
-                                    we hope
-                                    you can make it!
-                                </p>
-                            </div>
-                        </transition>
-
-                        <div class="row mt-4 d-flex w-xs-100 w-75 justify-content-end">
-                            <transition name="declined">
-                                <a v-show="declining && showDefaultButton" @click.prevent="decline" href="#"
-                                   class="text-center py-2 no-decoration button px-1"
-                                   style="border: 2px solid #9C6E38; color: #9C6E38; overflow:hidden; white-space: nowrap;">
-                                    {{ declineButtonText }}
-                                </a>
-                            </transition>
-                            <transition @after-leave="">
-                                <a v-show="!declining && !confirmed && !declined && !confirming" @click.prevent="decline" href="#"
-                                   class="text-center py-2 no-decoration button px-1"
-                                   style="border: 2px solid #9C6E38; color: #9C6E38; overflow:hidden; white-space: nowrap; width: 40%">
-                                    {{ 'No, I can\'t make it' }}
-                                </a>
-                            </transition>
-
-                            <transition @after-leave="">
-                                <a v-show="!declined && !confirmed && !confirming && !declining" @click.prevent="confirm" href="#"
-                                   class="text-center py-2 no-decoration button"
-                                   :style="'background-color: #9C6E38; color: white; width: 60%'">
-                                    Yes, I will be there!
-                                </a>
-                            </transition>
-                            <transition name="confirmed">
-                                <a v-show="confirming && showDefaultButton" href="#"
-                                   class="text-center py-2 no-decoration button"
-                                   :style="'background-color: #9C6E38; color: white'">
-                                    {{ confirmButtonText }}
-                                </a>
-                            </transition>
-                        </div>
-                    </div>
+        <div id="details-container"
+             class="d-flex align-items-center justify-content-center flex-column m-0 mt-5 mx-auto animate__animated animate__fadeInUp">
+            <transition name="details">
+                <div v-if="showDetails"
+                     class="d-flex align-items-center justify-content-center flex-column">
+                    <p id="theme" class="m-0 details-font" style="color: #ABABAB"><b>COCKTAILS & VIBES</b></p>
+                    <p id="version" class="m-0 details-font" style="color: #ABABAB">V1.0</p>
+                    <p id="date" class="m-0 details-font" style="color: #ABABAB">June 18, 2022 @ 1900hrs</p>
+                    <p id="greetings" class="m-0 mt-3 text-center" style="color: #ABABAB">
+                        Hi {{ invitation.guest.name }}, looking forward to celebrate our birthday with you,
+                        we hope
+                        you can make it!
+                    </p>
                 </div>
+            </transition>
+
+            <div class="row mt-4 d-flex w-xs-100 w-75 justify-content-end">
+                <transition name="declined">
+                    <a v-show="declining && showDefaultButton" @click.prevent="decline" href="#"
+                       class="text-center py-2 no-decoration button px-1"
+                       style="border: 2px solid #9C6E38; color: #9C6E38; overflow:hidden; white-space: nowrap;">
+                        {{ declineButtonText }}
+                    </a>
+                </transition>
+                <transition @after-leave="">
+                    <a v-show="!declining && !confirmed && !declined && !confirming" @click.prevent="decline" href="#"
+                       class="text-center py-2 no-decoration button px-1"
+                       style="border: 2px solid #9C6E38; color: #9C6E38; overflow:hidden; white-space: nowrap; width: 40%">
+                        {{ 'No, I can\'t make it' }}
+                    </a>
+                </transition>
+
+                <transition @after-leave="">
+                    <a v-show="!declined && !confirmed && !confirming && !declining" @click.prevent="confirm" href="#"
+                       class="text-center py-2 no-decoration button"
+                       :style="'background-color: #9C6E38; color: white; width: 60%'">
+                        Yes, I will be there!
+                    </a>
+                </transition>
+                <transition name="confirmed">
+                    <a v-show="confirming && showDefaultButton" href="#"
+                       class="text-center py-2 no-decoration button"
+                       :style="'background-color: #9C6E38; color: white'">
+                        {{ confirmButtonText }}
+                    </a>
+                </transition>
             </div>
         </div>
-    </div>
+    </guest-layout>
 </template>
 
 <script>
 import Link from "@inertiajs/inertia-vue3";
+import GuestLayout from "../../layouts/GuestLayout";
 
 export default {
 
     name: "ShowInvitation",
-    components: {Link},
+    components: {GuestLayout, Link},
     props: {
         invitation: {
             type: Object,

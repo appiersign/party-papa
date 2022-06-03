@@ -50,10 +50,10 @@
                 </table>
                 <div class="row">
                     <div class="text-right container-fluid d-flex justify-content-end">
-                        <inertia-link class="text-black" v-if="guests.links" :href="guests.links.prev">
+                        <inertia-link class="text-black" v-if="(guests.links) && guests.links.prev" :href="guests.links.prev">
                             previous
                         </inertia-link>
-                        <inertia-link class="text-black px-5" v-if="guests.links" :href="guests.links.next">
+                        <inertia-link class="text-black px-5" v-if="(guests.links) && guests.links.next" :href="guests.links.next">
                             next
                         </inertia-link>
                     </div>

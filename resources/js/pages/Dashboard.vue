@@ -2,8 +2,8 @@
     <dashboard-layout>
         <div class="row pb-5 mb-5">
             <dashboard-card name="guests" :count="totalGuests" icon="fa-user"/>
-            <dashboard-card name="declined" :count="totalDeclinedGuests" icon="fa-thumbs-down"/>
-            <dashboard-card name="confirmed" :count="totalConfirmedGuests" icon="fa-thumbs-up"/>
+            <dashboard-card name="declined" :count="totalDeclinedGuests" icon="fa-times"/>
+            <dashboard-card name="confirmed" :count="totalConfirmedGuests" icon="fa-check"/>
             <dashboard-card name="arrivals" :count="totalArrivedGuests" icon="fa-award"/>
         </div>
         <page-title text="Recent Guests" />
