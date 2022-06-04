@@ -16,6 +16,6 @@ class PlusOneArrivedNotification extends SMSNotification
 
     public function toSMS($notifiable): string
     {
-        return "{$notifiable->guest->getFirstName()}, {$this->guest->getFirstName()} has arrived!";
+        return "{$notifiable->getFirstName()}, {$this->guest->getFirstName()} has arrived!";
     }
 }

@@ -3,7 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -48,5 +50,17 @@ class User extends Authenticatable
     public function setPasswordAttribute(string $password)
     {
         $this->attributes['password'] = bcrypt($password);
+    }
+
+    public static function add(string $name, string $username, string $password, string $network, string $phone): Builder|Model
+    {
+        return static::query()->create([
+            'name' => $name,
+            'username' => $username,
+            'external_id' => uniqid(),
+            'password' => $password,
+            'network' => $network,
+            'phone' => $phone,
+        ]);
     }
 }

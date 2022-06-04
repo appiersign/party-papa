@@ -10,6 +10,6 @@ class GuestArrivedNotification extends SMSNotification
 
     public function toSMS($notifiable): string
     {
-        return "Welcome {$notifiable->getFirstName()}! We are glad to have you here. \nPlease visit the serving stands for your meat and drinks as stocks last. At this point, you're on your own, make sure you have fun. \nThank you!";
+        return "Welcome {$notifiable->getFirstName()}! We are glad to have you here. Please visit the serving stands for all you need. At this point, you're on your own, make sure you have fun. \nThank you!";
     }
 }
