@@ -3,13 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Http\Actions\Guest\DeleteGuestAction;
+use App\Http\Actions\Guest\GuestCheckInAction;
 use App\Http\Actions\Guest\InviteGuestAction;
 use App\Http\Actions\Guest\StoreOrUpdateGuestAction;
 use App\Http\Requests\GuestRequest;
 use App\Http\Resources\GuestResource;
 use App\Models\Guest;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Inertia\Response;
 use Inertia\ResponseFactory;
 
@@ -90,6 +93,16 @@ class GuestController extends Controller
     public function invite(Guest $guest, InviteGuestAction $action): RedirectResponse
     {
         return $action->handle($guest);
+    }
+
+    public function showCheckInForm(): Response|ResponseFactory
+    {
+        return inertia('Guest/CheckIn', []);
+    }
+
+    public function checkIn(Request $request, GuestCheckInAction $action): JsonResponse
+    {
+        return $action->handle($request);
     }
 
     /**

@@ -3,8 +3,7 @@
         <div id="strict-note-container"
              class="d-flex align-items-center justify-content-center m-0 mt-5 mx-auto animate__animated animate__fadeInUp"
              style="background-color: #09090B;">
-            <p id="strict-note" class="m-0 px-3 py-2 text-center" style="color: #AD7835"><b>{{ strictNote }}</b>
-            </p>
+            <p id="strict-note" class="m-0 px-3 py-2 text-center" style="color: #AD7835"><b>{{ strictNote }}</b></p>
         </div>
 
         <div id="details-container"

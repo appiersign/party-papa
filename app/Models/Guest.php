@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Http\Services\PhoneNumberResolutionService;
+use App\Notifications\PlusOneArrivedNotification;
 use App\Notifications\PlusOneGuestConfirmedInvitationNotification;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -66,7 +67,14 @@ class Guest extends User
 
     public function arrive(): bool
     {
-        return $this->update(['arrived_at' => now()->toDateTimeString()]);
+        if ($this->update(['arrived_at' => now()->toDateTimeString()])) {
+            if ($this->isPlusOne()) {
+                $this->guest->notify(new PlusOneArrivedNotification($this));
+            }
+            return true;
+        }
+
+        return false;
     }
 
     public function arrived(): bool
