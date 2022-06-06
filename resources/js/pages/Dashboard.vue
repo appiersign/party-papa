@@ -41,6 +41,13 @@ export default {
             type: Object,
             default: () => {}
         }
+    },
+    methods: {
+        filterByStatus(status) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('status', status);
+            return this.$inertia.get(url.href);
+        }
     }
 }
 </script>

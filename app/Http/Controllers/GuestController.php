@@ -9,6 +9,7 @@ use App\Http\Actions\Guest\StoreOrUpdateGuestAction;
 use App\Http\Requests\GuestRequest;
 use App\Http\Resources\GuestResource;
 use App\Models\Guest;
+use App\Models\Invitation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -34,7 +35,15 @@ class GuestController extends Controller
                                 ->orWhere('phone', 'like', "%{$search}%");
                         });
                     })
-                    ->orderBy('name')->cursorPaginate(20)
+                    ->when($status = request('status'), function (Builder $query) use ($status) {
+                        if ($status === 'arrived') {
+                            return $query->whereNotNull('arrived_at');
+                        }
+                        return $query->whereIn('guests.id', Invitation::query()->where('status', $status)->pluck('guest_id')->toArray());
+                    })
+                    ->orderBy('name')
+                    ->cursorPaginate(20)
+                    ->appends(request()->query())
             ),
         ]);
     }

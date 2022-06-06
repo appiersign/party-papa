@@ -4,7 +4,15 @@
             <alerts />
             <div class="col-md-12 d-flex justify-content-between align-items-center mb-3">
                 <h3>Guests</h3>
-                <form @submit.prevent="searchGuests" action="">
+                <form @submit.prevent="searchGuests" action="" class="d-flex">
+                    <div class="input-group">
+                        <select class="form-control" v-model="status">
+                            <option value="" selected>all statuses</option>
+                            <option value="confirmed">confirmed</option>
+                            <option value="declined">declined</option>
+                            <option value="arrived">arrived</option>
+                        </select>
+                    </div>
                     <div class="input-group">
                         <input type="text" class="form-control" placeholder="search name or number" v-model="search">
                         <div class="input-group-append">
@@ -37,19 +45,28 @@ export default {
     },
     data() {
         return {
-            search: ""
+            search: "",
+            status: ''
         };
     },
     methods: {
         searchGuests() {
-            return this.$inertia.get(`/guests?search=${this.search}`);
+            return this.$inertia.get(`/guests`, {
+                status: this.status,
+                search: this.search
+            });
         }
     },
     mounted() {
         const url = new URL(window.location.href);
         const search = url.searchParams.get("search");
+        const status = url.searchParams.get("status");
         if (search) {
             this.search = search;
+        }
+
+        if (status) {
+            this.status = status;
         }
     }
 }
