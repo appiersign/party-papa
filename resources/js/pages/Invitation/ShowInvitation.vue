@@ -14,15 +14,11 @@
                     <p id="theme" class="m-0 details-font" style="color: #ABABAB"><b>COCKTAILS & VIBES</b></p>
                     <p id="version" class="m-0 details-font" style="color: #ABABAB">V1.0</p>
                     <p id="date" class="m-0 details-font" style="color: #ABABAB">June 18, 2022 @ 1900hrs</p>
-                    <p id="greetings" class="m-0 mt-3 text-center" style="color: #ABABAB">
-                        Hi {{ invitation.guest.name }}, looking forward to celebrate our birthday with you,
-                        we hope
-                        you can make it!
-                    </p>
+                    <p id="greetings" class="m-0 mt-3 text-center" style="color: #ABABAB">{{ greetingsMessage }}</p>
                 </div>
             </transition>
 
-            <div class="row mt-4 d-flex w-xs-100 w-75 justify-content-end">
+            <div v-if="allowConfirmation" class="row mt-4 d-flex w-xs-100 w-75 justify-content-end">
                 <transition name="declined">
                     <a v-show="declining && showDefaultButton" @click.prevent="decline" href="#"
                        class="text-center py-2 no-decoration button px-1"
@@ -69,6 +65,10 @@ export default {
         invitation: {
             type: Object,
             required: true
+        },
+        allowConfirmation: {
+            type: Boolean,
+            default: true
         }
     },
     data() {
@@ -84,11 +84,17 @@ export default {
             showDetails: true,
             strictNote: 'STRICTLY BY INVITATION',
             showDefaultButton: true,
+            greetingsMessage: '',
         }
     },
     mounted() {
         this.confirmed = this.invitation.status === 'confirmed';
         this.declined = this.invitation.status === 'declined';
+        if (this.allowConfirmation === false) {
+            this.greetingsMessage = `Hi ${this.invitation.guest.name}, we really appreciate your interest in our event, unfortunately we are not allowing confirmations at this time due to the high number of guests. Sorry for the inconvenience.`
+        } else {
+            this.greetingsMessage = `Hi ${this.invitation.guest.name}, looking forward to celebrate our birthday with you, we hope you can make it!`;
+        }
     },
     methods: {
         confirmationRequest(status) {
@@ -125,9 +131,6 @@ export default {
                     this.confirmButtonText = 'confirmation failed, please try again'
                 }
             });
-        },
-        closeTab() {
-            window.close();
         },
         hideDetails() {
             this.showDetails = false;

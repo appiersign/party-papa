@@ -12,6 +12,7 @@ class ShowInvitationAction
     {
         return inertia('Invitation/ShowInvitation', [
             'invitation' => $invitation->load('guest'),
+            'allowConfirmation' => (Invitation::getConfirmed()->count() < (int)env('MAX_CONFIRMATIONS'))
         ]);
     }
 }
