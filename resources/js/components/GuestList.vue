@@ -7,6 +7,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Status</th>
                         <th>Gender</th>
                         <th>Phone Number</th>
                         <th>Side</th>
@@ -18,6 +19,7 @@
                     <tr>
                         <th>ID</th>
                         <th>Name</th>
+                        <th>Status</th>
                         <th>Gender</th>
                         <th>Phone Number</th>
                         <th>Side</th>
@@ -30,6 +32,10 @@
                     <tr v-for="(guest, g) in guests.data" :key="g">
                         <td>{{ guest.externalId }}</td>
                         <td>{{ guest.name }}</td>
+                        <td><span class="badge"
+                                  :class="{'bg-success': guest.arrivedAt !== 'n/a', 'bg-dark': guest.invitation[0].status === 'confirmed', 'bg-danger': guest.invitation[0].status === 'declined', 'bg-primary': guest.invitation[0].status === 'pending'}">
+                            {{ guest.invitation[0].status }}</span>
+                        </td>
                         <td>{{ guest.gender }}</td>
                         <td>{{ guest.phone }}</td>
                         <td>{{ guest.side }}</td>
@@ -50,10 +56,12 @@
                 </table>
                 <div class="row">
                     <div class="text-right container-fluid d-flex justify-content-end">
-                        <inertia-link class="text-black" v-if="(guests.links) && guests.links.prev" :href="guests.links.prev">
+                        <inertia-link class="text-black" v-if="(guests.links) && guests.links.prev"
+                                      :href="guests.links.prev">
                             previous
                         </inertia-link>
-                        <inertia-link class="text-black px-5" v-if="(guests.links) && guests.links.next" :href="guests.links.next">
+                        <inertia-link class="text-black px-5" v-if="(guests.links) && guests.links.next"
+                                      :href="guests.links.next">
                             next
                         </inertia-link>
                     </div>

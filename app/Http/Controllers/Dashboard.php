@@ -18,7 +18,7 @@ class Dashboard extends Controller
             'totalConfirmedGuests' => Invitation::query()->where('status', '=', 'confirmed')->count(),
             'totalArrivedGuests' => Guest::query()->where('arrived_at', '!=', null)->count(),
             'guests' => GuestResource::collection(
-                Guest::query()->latest('arrived_at')->latest()->take(10)->get()
+                Guest::with('invitations')->latest('arrived_at')->latest()->take(10)->get()
             ),
         ]);
     }

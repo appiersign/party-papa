@@ -12,7 +12,7 @@ class GuestResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  Request  $request
+     * @param Request $request
      * @return array|Arrayable|JsonSerializable
      */
     public function toArray($request): array|JsonSerializable|Arrayable
@@ -25,6 +25,7 @@ class GuestResource extends JsonResource
             'side' => $this->side ?? '',
             'gender' => $this->gender ?? '',
             'arrivedAt' => $this->when($this->arrived_at, fn() => $this->arrived_at->toDateTimeString(), 'n/a'),
+            'invitation' => InvitationResource::collection($this->whenLoaded('invitations'))
         ];
     }
 }

@@ -28,7 +28,7 @@ class GuestController extends Controller
     {
         return inertia('Guest/Index', [
             'guests' => GuestResource::collection(
-                Guest::query()
+                Guest::with('invitations')
                     ->when($search = request('search'), function (Builder $query) use ($search) {
                         $query->where(function ($query) use ($search) {
                             $query->where('name', 'like', "%{$search}%")
