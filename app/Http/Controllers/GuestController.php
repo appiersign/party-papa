@@ -41,7 +41,7 @@ class GuestController extends Controller
                         }
                         return $query->whereIn('guests.id', Invitation::query()->where('status', $status)->pluck('guest_id')->toArray());
                     })
-                    ->orderBy('name')
+                    ->latest()
                     ->cursorPaginate(20)
                     ->appends(request()->query())
             ),

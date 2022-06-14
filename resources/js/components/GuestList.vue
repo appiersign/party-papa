@@ -1,7 +1,7 @@
 <template>
     <div class="row">
-        <div class="col-md-12">
-            <div class="card p-5">
+        <div class="col-sm-12">
+            <div class="card p-5 table-responsive">
                 <table class="container table table-bordered table-striped">
                     <thead>
                     <tr>

@@ -1,5 +1,5 @@
 <template>
-    <div class="col-md-3">
+    <div class="col-sm-12 col-md-6 col-lg-3">
         <div class="card p-5">
             <div class="row d-flex align-items-center">
                 <i class="col-sm-4 fas fa-2xl" :class="[icon]" style="font-size: 3.5vw"></i>
