@@ -18,6 +18,7 @@ class CountDownSMSNotification extends SMSNotification
     {
         parent::__construct();
         $this->delay = $delay;
+        $this->queue = 'countDown';
     }
 
     public function toSMS($notifiable): string
