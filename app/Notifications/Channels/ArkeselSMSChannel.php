@@ -11,6 +11,7 @@ class ArkeselSMSChannel
     {
         $sms = new ArkeselSms(env('ARKESE_SMS_API_KEY'));
         $senderId = strtolower($notifiable->side) === 'appier-sign' ? 'APPIERSIGN' : 'NIIPRO';
+        sleep(2);
         $response = $sms->send($senderId, [$notifiable->phone], $message = $notification->toSMS($notifiable));
 
         logger()->info('--- SENDING SMS MESSAGE ---');
