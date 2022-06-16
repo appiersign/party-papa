@@ -6,13 +6,11 @@ use App\Models\Guest;
 use App\Models\Invitation;
 use App\Notifications\CountDownSMSNotification;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Notification;
 
 class CountDownJob implements ShouldQueue
 {
@@ -44,12 +42,6 @@ class CountDownJob implements ShouldQueue
                 ->toArray())
             ->get();
 
-        $delay = 0;
-
-        $guests->each(function (Guest $guest) use ($days, $delay) {
-            $delay += 10;
-            sleep(1);
-            $guest->notify((new CountDownSMSNotification($days))->delay(now()->addSeconds($delay)));
-        });
+        $guests->each(fn(Guest $guest) => $guest->notify(new CountDownSMSNotification($days)));
     }
 }
