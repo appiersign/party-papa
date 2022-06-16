@@ -44,14 +44,12 @@ class CountDownJob implements ShouldQueue
                 ->toArray())
             ->get();
 
-        $countDownSMSNotification = new CountDownSMSNotification($days);
-
         $delay = 0;
 
-        $guests->each(function (Guest $guest) use ($countDownSMSNotification, $delay) {
+        $guests->each(function (Guest $guest) use ($days, $delay) {
             $delay += 10;
-            $countDownSMSNotification->delay = $delay;
-            $guest->notify($countDownSMSNotification);
+            sleep(1);
+            $guest->notify((new CountDownSMSNotification($days))->delay(now()->addSeconds($delay)));
         });
     }
 }

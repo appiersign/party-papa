@@ -14,9 +14,10 @@ class CountDownSMSNotification extends SMSNotification
      *
      * @return void
      */
-    public function __construct(private readonly int $days)
+    public function __construct(private readonly int $days, int $delay = 1)
     {
         parent::__construct();
+        $this->delay = $delay;
     }
 
     public function toSMS($notifiable): string
