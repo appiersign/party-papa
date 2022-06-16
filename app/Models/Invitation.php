@@ -3,10 +3,13 @@
 namespace App\Models;
 
 use App\Http\Services\BitlyService;
+use App\Notifications\GuestSMSNotification;
+use App\Notifications\PlusOneSMSNotification;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Support\Facades\Notification;
 
 class Invitation extends Model
 {
@@ -65,6 +68,18 @@ class Invitation extends Model
         }
 
         return false;
+    }
+
+    public function send()
+    {
+        $guest = $this->guest;
+
+        if ($guest->isPlusOne()) {
+            Notification::send([$guest], new PlusOneSMSNotification);
+            return;
+        }
+
+        Notification::send([$guest], new GuestSMSNotification);
     }
 
     public static function getConfirmed(): Builder
