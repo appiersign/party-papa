@@ -9,9 +9,6 @@ use Illuminate\Notifications\Notification;
 
 class CountDownSMSNotification extends SMSNotification
 {
-
-    public $queue = 'countDown';
-
     /**
      * Create a new notification instance.
      *
@@ -20,6 +17,7 @@ class CountDownSMSNotification extends SMSNotification
     public function __construct(private readonly int $days)
     {
         parent::__construct();
+        $this->queue = 'countDown';
     }
 
     public function toSMS($notifiable): string
