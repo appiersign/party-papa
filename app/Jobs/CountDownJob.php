@@ -11,6 +11,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Notification;
 
 class CountDownJob implements ShouldQueue
 {
@@ -33,15 +34,13 @@ class CountDownJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $partyDay = Carbon::parse('2022-06-19');
-        $days = $partyDay->diffInDays(now());
-        $guests = Guest::query()
+        $days = Carbon::parse('2022-06-19')->diffInDays(now());
+        Guest::query()
             ->whereIn('id', Invitation::query()
                 ->where('status', '=', 'confirmed')
                 ->pluck('guest_id')
                 ->toArray())
-            ->get();
-
-        $guests->each(fn(Guest $guest) => $guest->notify(new CountDownSMSNotification($days)));
+            ->get()
+            ->tap(fn(array $guests) => Notification::send($guests, new CountDownSMSNotification($days)));
     }
 }
