@@ -34,13 +34,16 @@ class CountDownJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $days = Carbon::parse('2022-06-19')->diffInDays(now());
-        Guest::query()
-            ->whereIn('id', Invitation::query()
-                ->where('status', '=', 'confirmed')
-                ->pluck('guest_id')
-                ->toArray())
+        Guest::query()->whereIn('id', Invitation::query()
+            ->where('status', '=', 'confirmed')
+            ->pluck('guest_id')
+            ->toArray())
             ->get()
-            ->tap(fn(array $guests) => Notification::send($guests, new CountDownSMSNotification($days)));
+            ->tap(
+                fn(array $guests) => Notification::send(
+                    $guests,
+                    new CountDownSMSNotification(Carbon::parse('2022-06-19')->diffInDays(now()))
+                )
+            );
     }
 }
