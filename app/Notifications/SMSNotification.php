@@ -3,6 +3,8 @@
 namespace App\Notifications;
 
 use App\Notifications\Channels\ArkeselSMSChannel;
+use App\Notifications\Channels\MnotifySMSChannel;
+use App\Notifications\Channels\NtemSMSChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;

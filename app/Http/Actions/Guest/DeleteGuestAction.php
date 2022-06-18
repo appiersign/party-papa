@@ -2,7 +2,6 @@
 
 namespace App\Http\Actions\Guest;
 
-use App\Http\Requests\GuestRequest;
 use App\Models\Guest;
 use Exception;
 use Illuminate\Http\RedirectResponse;

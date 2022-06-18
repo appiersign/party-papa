@@ -14,11 +14,11 @@
                     <input v-model="guest.phone" type="tel" class="form-control mt-2" id="phone" required
                            placeholder="enter phone number">
                 </div>
-                <div class="form-group col-10 mx-auto">
-                    <label for="email"><b>Entry Code:</b></label>
-                    <input v-model="guest.entryCode" type="number" class="form-control mt-2" id="entry-code" required
-                           placeholder="enter entry code">
-                </div>
+<!--                <div class="form-group col-10 mx-auto">-->
+<!--                    <label for="email"><b>Entry Code:</b></label>-->
+<!--                    <input v-model="guest.entryCode" type="number" class="form-control mt-2" id="entry-code" required-->
+<!--                           placeholder="enter entry code">-->
+<!--                </div>-->
 
                 <div class="form-group col-10 mx-auto">
                     <button type="submit" class="btn btn-block mt-4 w-100 text-white"><b>Check In</b></button>

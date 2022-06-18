@@ -15,7 +15,6 @@ class GuestCheckInAction
     {
         try {
             $guest = Guest::query()
-                ->where('external_id', $request->input('entryCode'))
                 ->where('phone', '=', $request->input('phone'))
                 ->first();
 
@@ -24,7 +23,7 @@ class GuestCheckInAction
                 return response()->json(['message' => "{$guest->name} has checked in already!"], 400);
             }
 
-            if ($guest) {
+            if ($guest && $guest->invitations()->first()->confirmed()) {
                 $guest->arrive();
                 return response()->json(['message' => $guest]);
             }
