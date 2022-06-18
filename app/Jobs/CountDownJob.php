@@ -6,7 +6,6 @@ use App\Models\Guest;
 use App\Models\Invitation;
 use App\Notifications\CountDownSMSNotification;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldBeUnique;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
@@ -35,15 +34,16 @@ class CountDownJob implements ShouldQueue
      */
     public function handle(): void
     {
-        $partyDay = Carbon::parse('2022-06-19');
-        $days = $partyDay->diffInDays(now());
-        $guests = Guest::query()
-            ->whereIn('id', Invitation::query()
-                ->where('status', '=', 'confirmed')
-                ->pluck('guest_id')
-                ->toArray())
-            ->get();
-
-        Notification::send($guests, new CountDownSMSNotification($days));
+        Guest::query()->whereIn('id', Invitation::query()
+            ->where('status', '=', 'confirmed')
+            ->pluck('guest_id')
+            ->toArray())
+            ->get()
+            ->tap(
+                fn(array $guests) => Notification::send(
+                    $guests,
+                    new CountDownSMSNotification(Carbon::parse('2022-06-19')->diffInDays(now()))
+                )
+            );
     }
 }

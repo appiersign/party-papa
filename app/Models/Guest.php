@@ -62,7 +62,7 @@ class Guest extends User
 
     public function invite()
     {
-        $this->invitations()->create([]);
+        $this->invitations()->first()->send();
     }
 
     public function arrive(): bool

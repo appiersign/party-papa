@@ -17,6 +17,7 @@ class CountDownSMSNotification extends SMSNotification
     public function __construct(private readonly int $days)
     {
         parent::__construct();
+        $this->queue = 'countDown';
     }
 
     public function toSMS($notifiable): string
